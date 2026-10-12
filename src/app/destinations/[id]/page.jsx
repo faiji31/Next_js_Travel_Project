@@ -10,6 +10,8 @@ import {
   Star,
   Trash2,
 } from "lucide-react";
+import { Suspense } from "react";
+import EditModal from "@/components/Modal/EditModal";
 
 const formatDuration = (d) => {
   const days = parseInt(d, 10);
@@ -25,7 +27,7 @@ const formatDate = (dateStr) => {
   return `${m}/${d}/${y}`; // 11/06/2026
 };
 
-const DestinationDetailsPage = async ({ params }) => {
+const DestinationDetails = async ({ params }) => {
   const { id } = await params;
 
   const res = await fetch(`http://localhost:5000/destination/${id}`, {
@@ -78,12 +80,7 @@ const DestinationDetailsPage = async ({ params }) => {
         </Link>
 
         <div className="flex items-center gap-2">
-          <Link
-            href={`/destinations/${id}/edit`}
-            className="btn btn-sm btn-outline border-gray-300 text-gray-700 bg-white font-normal"
-          >
-            <SquarePen size={14} /> Edit
-          </Link>
+          <EditModal destination={destination}></EditModal>
           <button className="btn btn-sm btn-outline btn-error bg-white font-normal">
             <Trash2 size={14} /> Cancel
           </button>
@@ -192,5 +189,20 @@ const DestinationDetailsPage = async ({ params }) => {
     </div>
   );
 };
+
+const DestinationDetailsFallback = () => (
+  <div
+    className="max-w-6xl mx-auto px-4 py-20 text-center"
+    aria-busy="true"
+  >
+    <p className="text-gray-500">Loading destination...</p>
+  </div>
+);
+
+const DestinationDetailsPage = ({ params }) => (
+  <Suspense fallback={<DestinationDetailsFallback />}>
+    <DestinationDetails params={params} />
+  </Suspense>
+);
 
 export default DestinationDetailsPage;
