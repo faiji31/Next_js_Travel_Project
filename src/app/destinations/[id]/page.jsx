@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Suspense } from "react";
 import EditModal from "@/components/Modal/EditModal";
+import DeleteModal from "@/components/Modal/DeleteModal";
 
 const formatDuration = (d) => {
   const days = parseInt(d, 10);
@@ -79,11 +80,9 @@ const DestinationDetails = async ({ params }) => {
           <ArrowLeft size={16} /> Back to Destinations
         </Link>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <EditModal destination={destination}></EditModal>
-          <button className="btn btn-sm btn-outline btn-error bg-white font-normal">
-            <Trash2 size={14} /> Cancel
-          </button>
+          <DeleteModal destination={destination}></DeleteModal>
         </div>
       </div>
 
