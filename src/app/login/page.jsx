@@ -6,6 +6,7 @@ import {Button, Description, FieldError, Form, Input, Label, TextField} from "@h
 import { authClient } from '@/lib/auth-client';
 import { redirect } from 'next/navigation';
 import { showToast } from 'nextjs-toast-notify';
+import { FcGoogle } from 'react-icons/fc';
 
 const LoginPage = () => {
     const onSubmit =async(e)=>{
@@ -35,6 +36,13 @@ const LoginPage = () => {
           }
          
     }
+    const handleGoogleSignIn=async()=>{
+                await authClient.signIn.social({
+                provider: "google",
+                });
+               
+    
+              }
   return (
     <div className='max-w-7xl mx-auto m-10'>
         <div className='text-center my-5'>
@@ -73,6 +81,14 @@ const LoginPage = () => {
         
       </div>
     </Form>
+    <div className='text-center font-medium text-[12px] text-gray-600'><p>Or sign up with</p></div>
+         <Button type='button' onClick={handleGoogleSignIn} variant='outline' className={'rounded-none w-full'} >
+          <FcGoogle />
+             Sign In With Google
+            </Button>
+         
+        
+    
      </Card>
     </div>
   )

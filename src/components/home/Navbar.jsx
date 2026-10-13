@@ -12,6 +12,10 @@ const Navbar = () => {
   const user = session?.user;
   console.log(user);
 
+  const handleSignOut=async()=>{
+    await authClient.signOut();
+  }
+
   const nav = (
     <>
       <li>
@@ -65,11 +69,11 @@ const Navbar = () => {
       <div className="navbar-end gap-5">
       {user ? <>
       <li><Avatar>
-        <Avatar.Image alt="John Doe" src={user?.image} />
+        <Avatar.Image referrerPolicy="no-referrer" alt="John Doe" src={user?.image} />
         <Avatar.Fallback>{user.name[0]}</Avatar.Fallback>
       </Avatar></li>
       <li>
-        <Button variant="danger" className={'rounded-none'}>Logout</Button>
+        <Button onClick={handleSignOut} variant="danger" className={'rounded-none'}>Logout</Button>
       </li>
       </>:<>
       <Link href="/login">
@@ -81,7 +85,7 @@ const Navbar = () => {
       
       </>}
         <Link href="/profile">
-          <button className="btn  ">Profile</button>
+          <button className="btn ">Profile</button>
         </Link>
       </div>
     </div>

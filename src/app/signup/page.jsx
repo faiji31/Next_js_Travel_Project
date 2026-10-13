@@ -6,6 +6,7 @@ import {Button, Description, FieldError, Form, Input, Label, TextField} from "@h
 import { authClient } from '@/lib/auth-client';
 import { redirect } from 'next/navigation';
 import { showToast } from 'nextjs-toast-notify';
+import { FcGoogle } from 'react-icons/fc';
 
 const SignUpPage = () => {
     const onSubmit =async(e)=>{
@@ -19,6 +20,8 @@ const SignUpPage = () => {
             password:user.password,
             image:user.image
           })
+         
+         
 
           if(data){
             redirect('/')
@@ -35,6 +38,14 @@ const SignUpPage = () => {
           }
          
     }
+
+      const handleGoogleSignIn=async()=>{
+            await authClient.signIn.social({
+            provider: "google",
+            });
+           
+
+          }
   return (
     <div className='max-w-7xl mx-auto m-10'>
         <div className='text-center my-5'>
@@ -86,12 +97,17 @@ const SignUpPage = () => {
         <FieldError />
       </TextField>
       <div className="flex justify-center gap-2">
-        <Button className={'rounded none w-full'} type="submit">
+        <Button className={'rounded-none w-full'} type="submit">
          Create Account
         </Button>
         
       </div>
     </Form>
+    <div className='text-center font-medium text-[12px] text-gray-600'><p>Or sign up with</p></div>
+     <Button type='button' onClick={handleGoogleSignIn} variant='outline' className={'rounded-none w-full'} >
+      <FcGoogle />
+         Sign In With Google
+        </Button>
      </Card>
     </div>
   )
