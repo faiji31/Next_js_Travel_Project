@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -13,6 +14,7 @@ import {
 import { Suspense } from "react";
 import EditModal from "@/components/Modal/EditModal";
 import DeleteModal from "@/components/Modal/DeleteModal";
+import {DateField, Label} from "@heroui/react";
 
 const formatDuration = (d) => {
   const days = parseInt(d, 10);
@@ -161,11 +163,12 @@ const DestinationDetails = async ({ params }) => {
               ${price}
             </p>
             <p className="text-xs text-gray-500">per person</p>
-
-            <div className="mt-6 bg-gray-100 rounded px-4 py-3 text-sm text-gray-700 flex items-center gap-2">
-              <Calendar size={14} className="text-gray-500" />
-              {formatDate(departureDate)}
-            </div>
+           <DateField className="w-[256px] m-5" name="date">
+      <Label>Departure Date</Label>
+      <DateField.Group>
+        <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
+      </DateField.Group>
+    </DateField>
 
             <button className="btn w-full mt-4 bg-cyan-600 hover:bg-cyan-700 text-white border-none">
               Book Now <ArrowRight size={16} />
